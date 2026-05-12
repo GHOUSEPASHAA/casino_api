@@ -101,6 +101,24 @@ def generate_gaming_record(person_id: str):
         86400
     )
 
+    casino_name = random.choice([
+    "Grand Royale Casino",
+    "Bellagio Resort",
+    "Caesars Palace",
+    "MGM Grand",
+    "Wynn Las Vegas",
+    "Venetian Casino",
+    "Marina Bay Sands",
+    "Resorts World",
+    "Hard Rock Casino",
+    "Golden Nugget",
+    "Atlantis Casino",
+    "Red Rock Casino",
+    "Sunset Station",
+    "Cosmopolitan Casino",
+    "Treasure Island Casino"
+    ])
+
     timestamp = datetime.now() - timedelta(
         days=days_back,
         seconds=seconds_back
@@ -139,7 +157,7 @@ def generate_gaming_record(person_id: str):
 
         "GAME_GAME_TITLE": game_title,
 
-        "GAME_CASINO_NAME": "Grand Royale Casino",
+        "GAME_CASINO_NAME": casino_name,
 
         "GAME_BET": bet,
 
