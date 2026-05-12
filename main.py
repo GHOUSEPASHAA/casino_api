@@ -185,10 +185,14 @@ def generate_gaming_record(person_id: str):
 
 
 @app.get("/v1/player-activity")
-async def get_player_activity(limit: int = 5000):
+async def get_player_activity(
+    players: int = 500,
+    records_per_player: int = 10
+):
     """
-    Returns 5000 stable players
-    with unique names and dynamic gameplay.
+    Returns players with multiple gaming records.
+    Each player keeps same identity details
+    but has many gameplay transactions.
     """
 
     records = []
@@ -197,29 +201,36 @@ async def get_player_activity(limit: int = 5000):
 
     i = 0
 
-    while len(records) < limit:
+    while len(used_names) < players:
 
-        # Stable faker-generated UUID
+        # Stable UUID
         fake.seed_instance(i)
 
         player_id = fake.uuid4()
 
-        record = generate_gaming_record(
+        sample_record = generate_gaming_record(
             person_id=player_id
         )
 
         full_name = (
-            record["PERSON_FIRST_NAME"] +
+            sample_record["PERSON_FIRST_NAME"] +
             " " +
-            record["PERSON_LAST_NAME"]
+            sample_record["PERSON_LAST_NAME"]
         )
 
-        # Ensure unique names
+        # Ensure unique player names
         if full_name not in used_names:
 
             used_names.add(full_name)
 
-            records.append(record)
+            # Generate multiple records
+            for _ in range(records_per_player):
+
+                records.append(
+                    generate_gaming_record(
+                        person_id=player_id
+                    )
+                )
 
         i += 1
 
