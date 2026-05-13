@@ -103,20 +103,8 @@ def generate_gaming_record(person_id: str):
 
     casino_name = random.choice([
     "Grand Royale Casino",
-    "Bellagio Resort",
-    "Caesars Palace",
-    "MGM Grand",
-    "Wynn Las Vegas",
-    "Venetian Casino",
-    "Marina Bay Sands",
-    "Resorts World",
-    "Hard Rock Casino",
-    "Golden Nugget",
     "Atlantis Casino",
-    "Red Rock Casino",
-    "Sunset Station",
-    "Cosmopolitan Casino",
-    "Treasure Island Casino"
+    "Red Rock Casino"
     ])
 
     timestamp = datetime.now() - timedelta(
@@ -125,7 +113,6 @@ def generate_gaming_record(person_id: str):
     )
 
     return {
-        "UNIVERSAL_PERSON_KEY": person_id,
 
         "PERSONID": personid,
 
@@ -187,7 +174,7 @@ def generate_gaming_record(person_id: str):
 @app.get("/v1/player-activity")
 async def get_player_activity(
     players: int = 500,
-    records_per_player: int = 10
+    records_per_player: int = 3
 ):
     """
     Returns players with multiple gaming records.
