@@ -146,17 +146,7 @@ def generate_gaming_record(person_id: str):
         random.choice(host_email_domains)
     )
 
-    current_host_start_date = (
-        datetime.now() - timedelta(
-            days=random.randint(1, 365)
-        )
-    ).date()
-
-    current_host_stop_date = (
-        datetime.now() + timedelta(
-            days=random.randint(30, 365)
-        )
-    ).date()
+    
 
     current_host_sf_property_id = random.choice(
         list(properties.keys())
@@ -263,6 +253,14 @@ def generate_gaming_record(person_id: str):
         days=days_back,
         seconds=seconds_back
     )
+
+    current_host_start_date = (
+    timestamp - timedelta(days=10)
+    ).date()
+
+    current_host_stop_date = (
+        timestamp + timedelta(days=90)
+    ).date()
 
     return {
 
