@@ -123,7 +123,7 @@ def generate_gaming_record(person_id: str):
     ##################################
     # Reset random seed for dynamic values
     random.seed(None)
-
+    fake.seed_instance(None)
     current_host = fake.name()
 
     host_email_domains = [
