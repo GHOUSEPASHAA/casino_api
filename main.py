@@ -62,6 +62,133 @@ def generate_gaming_record(person_id: str):
         "GAME:SLOT_PLAY"
     ])
 
+    address1 = fake.street_address()
+
+    city = fake.city()
+
+    state_province = fake.state()
+
+    country = fake.country()
+
+    postal_code = fake.postcode()
+
+    birthdate = fake.date_of_birth(
+        minimum_age=21,
+        maximum_age=80
+    )
+
+    gender = random.choice([
+        "Male",
+        "Female"
+    ])
+
+    home_phone = fake.phone_number()
+
+    mobile_phone = fake.phone_number()
+
+    alt_phone = fake.phone_number()
+
+    email = fake.email()
+    ##################################
+    # Default Boolean Flags
+    ##################################
+
+    is_active = True
+
+    is_active_player = True
+
+    is_banned = False
+
+    is_banned_player = False
+
+    is_no_mail = False
+
+    is_return_mail = False
+
+ ##################################
+    # Dynamic Host / CMP Data
+    ##################################
+
+    current_host = fake.name()
+
+    current_host_email = fake.email()
+
+    current_host_start_date = (
+        datetime.now() - timedelta(
+            days=random.randint(1, 365)
+        )
+    ).date()
+
+    current_host_stop_date = (
+        datetime.now() + timedelta(
+            days=random.randint(30, 365)
+        )
+    ).date()
+
+    current_host_sf_property_id = str(
+        random.randint(1000, 9999)
+    )
+
+    current_host_property_name = random.choice([
+        "Grand Royale Casino",
+        "Atlantis Casino",
+        "Red Rock Casino"
+    ])
+
+    cmp_preferred_property_id = str(
+        random.randint(1000, 9999)
+    )
+
+    cmp_preferred_property_distance_miles = round(
+        random.uniform(1, 100),
+        2
+    )
+
+    cmp_closest_property_distance_miles = round(
+        random.uniform(1, 50),
+        2
+    )
+
+    cmp_closest_property_id = random.randint(
+        1000,
+        9999
+    )
+
+    cmp_closest_property_name = random.choice([
+        "Grand Royale Casino",
+        "Atlantis Casino",
+        "Red Rock Casino"
+    ])
+
+    player_territory = random.choice([
+        "East",
+        "West",
+        "North",
+        "South"
+    ])
+
+    player_marketarea = random.choice([
+        "Vegas",
+        "California",
+        "Texas",
+        "Florida"
+    ])
+
+    cmp_mail_optedin = random.choice([
+        True,
+        False
+    ])
+
+    cmp_sms_optedin = random.choice([
+        True,
+        False
+    ])
+
+    cmp_email_optedin = random.choice([
+        True,
+        False
+    ])
+
     # Reset random seed for dynamic values
     random.seed(None)
 
@@ -121,6 +248,86 @@ def generate_gaming_record(person_id: str):
         "PERSON_FIRST_NAME": first_name,
 
         "PERSON_LAST_NAME": last_name,
+
+        "ADDRESS1": address1,
+
+        "CITY": city,
+
+        "STATE_PROVINCE": state_province,
+
+        "COUNTRY": country,
+
+        "POSTAL_CODE": postal_code,
+
+        "BIRTHDATE": birthdate.isoformat(),
+
+        "GENDER": gender,
+
+        "HOME_PHONE": home_phone,
+
+        "MOBILE_PHONE": mobile_phone,
+
+        "ALT_PHONE": alt_phone,
+
+        "EMAIL": email,
+
+        "IS_ACTIVE": is_active,
+
+        "IS_ACTIVE_PLAYER": is_active_player,
+
+        "IS_BANNED": is_banned,
+
+        "IS_BANNED_PLAYER": is_banned_player,
+
+        "IS_NO_MAIL": is_no_mail,
+
+        "IS_RETURN_MAIL": is_return_mail,
+
+        "CURRENT_HOST": current_host,
+
+        "CURRENT_HOST_EMAIL": current_host_email,
+
+        "CURRENT_HOST_START_DATE":
+            current_host_start_date.isoformat(),
+
+        "CURRENT_HOST_STOP_DATE":
+            current_host_stop_date.isoformat(),
+
+        "CURRENT_HOST_SF_PROPERTY_ID":
+            current_host_sf_property_id,
+
+        "CURRENT_HOST_PROPERTY_NAME":
+            current_host_property_name,
+
+        "CMP_PREFERRED_PROPERTY_ID":
+            cmp_preferred_property_id,
+
+        "CMP_PREFERRED_PROPERTY_DISTANCE_MILES":
+            cmp_preferred_property_distance_miles,
+
+        "CMP_CLOSEST_PROPERTY_DISTANCE_MILES":
+            cmp_closest_property_distance_miles,
+
+        "CMP_CLOSEST_PROPERTY_ID":
+            cmp_closest_property_id,
+
+        "CMP_CLOSEST_PROPERTY_NAME":
+            cmp_closest_property_name,
+
+        "PLAYER_TERRITORY":
+            player_territory,
+
+        "PLAYER_MARKETAREA":
+            player_marketarea,
+
+        "CMP_MAIL_OPTEDIN":
+            cmp_mail_optedin,
+
+        "CMP_SMS_OPTEDIN":
+            cmp_sms_optedin,
+
+        "CMP_EMAIL_OPTEDIN":
+            cmp_email_optedin,
 
         "ENTITY_ACTION": entity_action,
 
