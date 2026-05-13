@@ -88,7 +88,20 @@ def generate_gaming_record(person_id: str):
 
     alt_phone = fake.phone_number()
 
-    email = fake.email()
+    email_domains = [
+        "gmail.com",
+        "yahoo.com",
+        "outlook.com",
+        "hotmail.com"
+    ]
+
+    email = (
+        first_name.lower() +
+        "." +
+        last_name.lower() +
+        "@" +
+        random.choice(email_domains)
+    )
     ##################################
     # Default Boolean Flags
     ##################################
@@ -108,10 +121,30 @@ def generate_gaming_record(person_id: str):
  ##################################
     # Dynamic Host / CMP Data
     ##################################
+    # Reset random seed for dynamic values
+    random.seed(None)
 
     current_host = fake.name()
 
-    current_host_email = fake.email()
+    host_email_domains = [
+        "casinohost.com",
+        "vipservices.com",
+        "grandroyale.com"
+    ]
+
+    properties = {
+        "GRC": "Grand Royale Casino",
+        "AC": "Atlantis Casino",
+        "RRC": "Red Rock Casino"
+    }
+
+    current_host_email = (
+        
+        current_host.lower().replace(" ", ".") +
+        str(random.randint(1, 999)) +
+        "@" +
+        random.choice(host_email_domains)
+    )
 
     current_host_start_date = (
         datetime.now() - timedelta(
@@ -125,18 +158,16 @@ def generate_gaming_record(person_id: str):
         )
     ).date()
 
-    current_host_sf_property_id = str(
-        random.randint(1000, 9999)
+    current_host_sf_property_id = random.choice(
+        list(properties.keys())
     )
 
-    current_host_property_name = random.choice([
-        "Grand Royale Casino",
-        "Atlantis Casino",
-        "Red Rock Casino"
-    ])
+    current_host_property_name = properties[
+        current_host_sf_property_id
+    ]
 
-    cmp_preferred_property_id = str(
-        random.randint(1000, 9999)
+    cmp_preferred_property_id = random.choice(
+        list(properties.keys())
     )
 
     cmp_preferred_property_distance_miles = round(
@@ -149,16 +180,13 @@ def generate_gaming_record(person_id: str):
         2
     )
 
-    cmp_closest_property_id = random.randint(
-        1000,
-        9999
+    cmp_closest_property_id = random.choice(
+        list(properties.keys())
     )
 
-    cmp_closest_property_name = random.choice([
-        "Grand Royale Casino",
-        "Atlantis Casino",
-        "Red Rock Casino"
-    ])
+    cmp_closest_property_name = properties[
+        cmp_closest_property_id
+    ]
 
     player_territory = random.choice([
         "East",
@@ -189,8 +217,7 @@ def generate_gaming_record(person_id: str):
         False
     ])
 
-    # Reset random seed for dynamic values
-    random.seed(None)
+    
 
     # Dynamic gaming transaction values
     bet = round(
@@ -228,11 +255,9 @@ def generate_gaming_record(person_id: str):
         86400
     )
 
-    casino_name = random.choice([
-    "Grand Royale Casino",
-    "Atlantis Casino",
-    "Red Rock Casino"
-    ])
+    casino_name = properties[
+        current_host_sf_property_id
+    ]
 
     timestamp = datetime.now() - timedelta(
         days=days_back,
