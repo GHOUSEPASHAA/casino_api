@@ -102,28 +102,15 @@ def generate_gaming_record(person_id: str):
         "@" +
         random.choice(email_domains)
     )
+
+
     ##################################
-    # Default Boolean Flags
-    ##################################
-
-    is_active = True
-
-    is_active_player = True
-
-    is_banned = False
-
-    is_banned_player = False
-
-    is_no_mail = False
-
-    is_return_mail = False
-
- ##################################
     # Dynamic Host / CMP Data
     ##################################
     # Reset random seed for dynamic values
     random.seed(None)
     fake.seed_instance(None)
+
     current_host = fake.name()
 
     host_email_domains = [
@@ -207,6 +194,25 @@ def generate_gaming_record(person_id: str):
         False
     ])
 
+    ##################################
+    # Default Boolean Flags
+    ##################################
+
+    is_active = True
+
+    is_active_player = True
+
+    is_banned = False
+
+    is_banned_player = False
+
+    is_no_mail = False
+
+    is_return_mail = False
+
+ 
+
+    
     
 
     # Dynamic gaming transaction values
@@ -261,6 +267,220 @@ def generate_gaming_record(person_id: str):
     current_host_stop_date = (
         timestamp + timedelta(days=90)
     ).date()
+
+    ############################
+    game_tran_id = fake.uuid4()
+
+    game_club_level = club_level
+
+    game_cash_buy_in = round(
+        random.uniform(10, 500),
+        2
+    )
+
+    game_credit_buy_in = round(
+        random.uniform(0, 300),
+        2
+    )
+
+    game_chip_buy_in = round(
+        random.uniform(0, 1000),
+        2
+    )
+
+    game_promo_buy_in = round(
+        random.uniform(0, 200),
+        2
+    )
+
+    game_plays = random.randint(1, 500)
+
+    game_unadjusted_theo = round(
+        theo_win + random.uniform(1, 50),
+        2
+    )
+
+    game_net_theo_win = round(
+        theo_win - random.uniform(0, 20),
+        2
+    )
+
+    game_net_casino_win = round(
+        casino_win - random.uniform(0, 50),
+        2
+    )
+
+    game_cmp_game_name = game_title
+
+    game_cmp_game_id = random.randint(
+        1000,
+        9999
+    )
+
+    game_jackpot_amount = round(
+        random.uniform(0, 50000),
+        2
+    )
+
+    player_value = round(
+        random.uniform(1.0, 30.0),
+        4
+    )
+
+    #####
+    if entity_action == "GAME:SLOT_PLAY":
+
+        has_played_slot_game = "Y"
+    else:
+
+        has_played_slot_game = "N"
+
+    if has_played_slot_game == "Y":
+
+        has_played_table_game = "N"
+
+        # Slot data
+        game_machine_mfr = random.choice([
+            "IGT",
+            "Aristocrat",
+            "Konami"
+        ])
+
+        game_machine_model = random.choice([
+            "A560",
+            "Raptor",
+            "A600"
+        ])
+
+        game_machine_location = (
+            f"Zone-{random.randint(1,10)}"
+        )
+
+        game_machine_section = (
+            f"Section-{random.randint(1,20)}"
+        )
+
+        game_machine_bank = (
+            f"Bank-{random.randint(1,50)}"
+        )
+
+        game_machine_position = random.randint(
+            1,
+            10
+        )
+
+        game_machine_is_leased = random.choice([
+            True,
+            False
+        ])
+
+        game_machine_lease_rate_type = (
+            random.choice([
+                "Fixed",
+                "Revenue Share"
+            ])
+        )
+
+        game_machine_cabinet_type = (
+            random.choice([
+                "Slant",
+                "Curve"
+            ])
+        )
+
+        game_machine_sds_game_title = (
+            game_title
+        )
+
+        game_machine_sas_serial_number = (
+            serial_number
+        )
+
+        game_machine_pls_game_theme = (
+            random.choice([
+                "Asian",
+                "Classic",
+                "Vegas"
+            ])
+        )
+
+        # Table columns EMPTY
+        game_table_average_bet = None
+        game_table_walked_with = None
+        game_table_game_type = None
+        game_table_location = None
+        game_table_pit_no = None
+        game_table_table_no = None
+        game_table_seat_no = None
+        game_table_freq_id = None
+        game_table_is_void = None
+
+    else:
+
+        has_played_table_game = "Y"
+
+        # Table game data
+        game_table_average_bet = round(
+            random.uniform(5, 500),
+            2
+        )
+
+        game_table_walked_with = round(
+            random.uniform(-5000, 10000),
+            2
+        )
+
+        game_table_game_type = random.choice([
+            "Blackjack",
+            "Roulette",
+            "Baccarat",
+            "Poker"
+        ])
+
+        game_table_location = (
+            f"Pit-{random.randint(1,10)}"
+        )
+
+        game_table_pit_no = random.randint(
+            1,
+            20
+        )
+
+        game_table_table_no = random.randint(
+            1,
+            200
+        )
+
+        game_table_seat_no = random.randint(
+            1,
+            8
+        )
+
+        game_table_freq_id = random.choice([
+            "DAILY",
+            "WEEKLY",
+            "MONTHLY"
+        ])
+
+        game_table_is_void = random.choice([
+            True,
+            False
+        ])
+
+        # Slot columns EMPTY
+        game_machine_mfr = None
+        game_machine_model = None
+        game_machine_location = None
+        game_machine_section = None
+        game_machine_bank = None
+        game_machine_position = None
+        game_machine_is_leased = None
+        game_machine_lease_rate_type = None
+        game_machine_cabinet_type = None
+        game_machine_sds_game_title = None
+        game_machine_sas_serial_number = None
+        game_machine_pls_game_theme = None
+
 
     return {
 
@@ -364,7 +584,11 @@ def generate_gaming_record(person_id: str):
 
         "TIER_POINTS": random.randint(10, 500),
 
+        
+
         "TRANSACTION_AMOUNT": bet,
+
+        "PLAYER_VALUE": player_value,
 
         "GAME_THEO_WIN": theo_win,
 
@@ -372,13 +596,32 @@ def generate_gaming_record(person_id: str):
 
         "GAME_GROSS_WIN": casino_win,
 
+        "GAME_TRAN_ID": game_tran_id,
+
+
         "GAME_GAME_TITLE": game_title,
 
         "GAME_CASINO_NAME": casino_name,
 
+        "GAME_CLUB_LEVEL": game_club_level,
+
+        "GAME_CASH_BUY_IN": game_cash_buy_in,
+
+        "GAME_CREDIT_BUY_IN": game_credit_buy_in,
+
+        "GAME_CHIP_BUY_IN": game_chip_buy_in,
+
+        "GAME_PROMO_BUY_IN": game_promo_buy_in,
+
+        "GAME_PLAYS": game_plays,
+
         "GAME_BET": bet,
 
         "GAME_PAID_OUT": paid_out,
+
+        
+        "GAME_UNADJUSTED_THEO":
+            game_unadjusted_theo,
 
         "GAME_HOLD_PCT": round(
             hold_pct * 100,
@@ -387,6 +630,29 @@ def generate_gaming_record(person_id: str):
 
         "GAME_LOCATION": f"Zone-{random.randint(1, 10)}",
 
+        "HAS_PLAYED_SLOT_GAME": has_played_slot_game,
+
+        "HAS_PLAYED_TABLE_GAME":
+            has_played_table_game,
+
+        "GAME_NET_THEO_WIN":
+            game_net_theo_win,
+
+        "GAME_NET_CASINO_WIN":
+            game_net_casino_win,
+
+        "GAME_CMP_GAME_NAME":
+            game_cmp_game_name,
+
+        "GAME_CMP_GAME_ID":
+            game_cmp_game_id,
+
+        "GAME_MACHINE_MFR":
+            game_machine_mfr,
+
+        "GAME_MACHINE_MODEL":
+            game_machine_model,
+        
         "GAME_MACHINE_SERIAL_NUMBER": serial_number,
 
         "GAME_MACHINE_GAME_TYPE": random.choice([
@@ -395,7 +661,72 @@ def generate_gaming_record(person_id: str):
             "Electronic Table"
         ]),
 
-        "HAS_PLAYED_SLOT_GAME": "Y",
+        
+
+        
+        
+
+        
+        
+
+        "GAME_MACHINE_LOCATION":
+            game_machine_location,
+
+        "GAME_MACHINE_SECTION":
+            game_machine_section,
+
+        "GAME_MACHINE_BANK":
+            game_machine_bank,
+
+        "GAME_MACHINE_POSITION":
+            game_machine_position,
+
+        "GAME_MACHINE_IS_LEASED":
+            game_machine_is_leased,
+
+        "GAME_MACHINE_LEASE_RATE_TYPE":
+            game_machine_lease_rate_type,
+
+        "GAME_MACHINE_CABINET_TYPE":
+            game_machine_cabinet_type,
+
+        "GAME_JACKPOT_AMOUNT":
+            game_jackpot_amount,
+
+        "GAME_MACHINE_SDS_GAME_TITLE":
+            game_machine_sds_game_title,
+
+        "GAME_MACHINE_SAS_SERIAL_NUMBER":
+            game_machine_sas_serial_number,
+
+        
+
+        "GAME_TABLE_AVERAGE_BET":
+            game_table_average_bet,
+
+        "GAME_TABLE_WALKED_WITH":
+            game_table_walked_with,
+
+        "GAME_TABLE_GAME_TYPE":
+            game_table_game_type,
+
+        "GAME_TABLE_LOCATION":
+            game_table_location,
+
+        "GAME_TABLE_PIT_NO":
+            game_table_pit_no,
+
+        "GAME_TABLE_TABLE_NO":
+            game_table_table_no,
+
+        "GAME_TABLE_SEAT_NO":
+            game_table_seat_no,
+
+        "GAME_TABLE_FREQ_ID":
+            game_table_freq_id,
+
+        "GAME_TABLE_IS_VOID":
+            game_table_is_void,
 
         "LOAD_TIMESTAMP": datetime.now().isoformat()
     }
