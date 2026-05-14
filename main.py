@@ -57,10 +57,7 @@ def generate_gaming_record(person_id: str):
     )
 
     # Stable ENTITY_ACTION
-    entity_action = random.choice([
-        "GAME:TABLE_PLAY",
-        "GAME:SLOT_PLAY"
-    ])
+    
 
     address1 = fake.street_address()
 
@@ -111,6 +108,11 @@ def generate_gaming_record(person_id: str):
     random.seed(None)
     fake.seed_instance(None)
 
+
+    entity_action = random.choice([
+        "GAME:TABLE_PLAY",
+        "GAME:SLOT_PLAY"
+    ])
     current_host = fake.name()
 
     host_email_domains = [
