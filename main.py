@@ -482,6 +482,11 @@ def generate_gaming_record(person_id: str):
         game_machine_sds_game_title = None
         game_machine_sas_serial_number = None
         game_machine_pls_game_theme = None
+    
+    game_duration_min = random.randint(
+        1,
+        480
+    )
 
 
     return {
@@ -573,8 +578,14 @@ def generate_gaming_record(person_id: str):
 
         "CMP_EMAIL_OPTEDIN":
             cmp_email_optedin,
+        
+        "SOURCE":"CMP",
+
+        "ENTITY":"GAME",
 
         "ENTITY_ACTION": entity_action,
+
+        "DURATION":game_duration_min,
 
         "EVENT_ID": fake.bothify(text='EV-########'),
 
