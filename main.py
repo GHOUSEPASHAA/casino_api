@@ -31,9 +31,7 @@ def generate_gaming_record(person_id: str):
     first_name = fake.first_name()
     last_name = fake.last_name()
 
-    club_level = random.choice(
-        ["Gold", "Silver", "Platinum", "Diamond"]
-    )
+   
 
     serial_number = fake.bothify(
         text='SN-####-####'
@@ -65,7 +63,7 @@ def generate_gaming_record(person_id: str):
 
     state_province = fake.state()
 
-    country = fake.country()
+    country = 'USA'
 
     postal_code = fake.postcode()
 
@@ -219,9 +217,34 @@ def generate_gaming_record(person_id: str):
 
     # Dynamic gaming transaction values
     bet = round(
-        random.uniform(1.0, 100.0),
-        2
+    random.uniform(1.0, 1000.0),
+    2
     )
+
+    # Tier point logic based on betting
+    if bet < 20:
+
+        club_level = "Silver"
+
+        tier_points = random.randint(5, 50)
+
+    elif bet < 100:
+
+        club_level = "Gold"
+
+        tier_points = random.randint(50, 150)
+
+    elif bet < 300:
+
+        club_level = "Platinum"
+
+        tier_points = random.randint(150, 400)
+
+    else:
+
+        club_level = "Diamond"
+
+        tier_points = random.randint(400, 1200)
 
     hold_pct = random.uniform(0.05, 0.15)
 
@@ -232,18 +255,18 @@ def generate_gaming_record(person_id: str):
 
     win_chance = random.random()
 
-    if win_chance > 0.6:
-        paid_out = round(
-            bet * random.uniform(1.2, 5.0),
-            2
-        )
-    else:
-        paid_out = 0.0
+    
+    paid_out = round(
+    bet * random.uniform(0.92, 1.05),
+    2)
+    
 
     casino_win = round(
-        bet - paid_out,
-        2
+    random.uniform(-44, 48300),
+    2
     )
+
+    transaction_amount = casino_win
 
         # Random timestamp within last 1 year
     days_back = random.randint(0, 365)
@@ -303,8 +326,8 @@ def generate_gaming_record(person_id: str):
     )
 
     game_net_theo_win = round(
-        theo_win - random.uniform(0, 20),
-        2
+    theo_win * random.uniform(0.97, 1.00),
+    2
     )
 
     game_net_casino_win = round(
@@ -325,8 +348,8 @@ def generate_gaming_record(person_id: str):
     )
 
     player_value = round(
-        random.uniform(1.0, 30.0),
-        4
+    theo_win * random.uniform(0.85, 1.15),
+    4
     )
 
     #####
@@ -595,11 +618,11 @@ def generate_gaming_record(person_id: str):
 
         "CLUB_LEVEL": club_level,
 
-        "TIER_POINTS": random.randint(10, 500),
+        "TIER_POINTS": tier_points,
 
         
 
-        "TRANSACTION_AMOUNT": bet,
+        "TRANSACTION_AMOUNT": transaction_amount,
 
         "PLAYER_VALUE": player_value,
 
