@@ -342,10 +342,7 @@ def generate_gaming_record(person_id: str):
         9999
     )
 
-    game_jackpot_amount = round(
-        random.uniform(0, 50000),
-        2
-    )
+    game_jackpot_amount = 0
 
     player_value = round(
     theo_win * random.uniform(0.85, 1.15),
