@@ -120,9 +120,9 @@ def generate_gaming_record(person_id: str):
     ]
 
     properties = {
-        "GRC": "Grand Royale Casino",
-        "AC": "Atlantis Casino",
-        "RRC": "Red Rock Casino"
+        "RLC": "Red Lantern Casino",
+        "BMC": "Blue Meridian Casino",
+        "GPC": "Glass Palm Casino"
     }
 
     current_host_email = (
