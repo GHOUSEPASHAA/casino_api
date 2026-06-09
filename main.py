@@ -925,14 +925,14 @@ async def get_player_activity(
 
                         break
 
-        for gaming_date in gaming_dates:
+            for gaming_date in gaming_dates:
 
-            records.append(
-                generate_gaming_record(
-                    person_id=player_id,
-                    timestamp=gaming_date
+                records.append(
+                    generate_gaming_record(
+                        person_id=player_id,
+                        timestamp=gaming_date
+                    )
                 )
-            )
 
         i += 1
 
