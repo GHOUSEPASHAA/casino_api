@@ -111,7 +111,27 @@ def generate_gaming_record(person_id: str):
         "GAME:TABLE_PLAY",
         "GAME:SLOT_PLAY"
     ])
-    current_host = fake.name()
+    hosts_by_property = {
+    "RLC": [
+        "N/A",
+        "Alex Morgan",
+        "Jennifer Lee",
+        "Emily Rodriguez",
+        "Christopher Harris"
+    ],
+    "BMC": [
+        "N/A",
+        "Robert Martinez",
+        "Sarah Thompson",
+        "James Anderson"
+    ],
+    "GPC": [
+        "N/A",
+        "Michael Carter",
+        "David Wilson",
+        "Lisa Bennett"
+    ]
+    }
 
     host_email_domains = [
         "casinohost.com",
@@ -125,13 +145,7 @@ def generate_gaming_record(person_id: str):
         "GPC": "Glass Palm Casino"
     }
 
-    current_host_email = (
-        
-        current_host.lower().replace(" ", ".") +
-        str(random.randint(1, 999)) +
-        "@" +
-        random.choice(host_email_domains)
-    )
+    
 
     
 
@@ -139,9 +153,25 @@ def generate_gaming_record(person_id: str):
         list(properties.keys())
     )
 
-    current_host_property_name = properties[
+    current_host = random.choice(
+    hosts_by_property[
         current_host_sf_property_id
     ]
+    )
+    if current_host == "N/A":
+        current_host_email = "N/A"
+        
+        current_host_property_name = "N/A"
+    else:
+        current_host_email = (
+            current_host.lower().replace(" ", ".")
+            + "@"
+            + random.choice(host_email_domains)
+        )
+
+        current_host_property_name = properties[
+            current_host_sf_property_id
+        ]
 
     cmp_preferred_property_id = random.choice(
         list(properties.keys())
@@ -216,9 +246,10 @@ def generate_gaming_record(person_id: str):
     
 
     # Dynamic gaming transaction values
+    # Dynamic gaming transaction values
     bet = round(
-    random.uniform(1.0, 1000.0),
-    2
+        random.uniform(1.0, 1200.0),
+        2
     )
 
     # Tier point logic based on betting
@@ -246,7 +277,7 @@ def generate_gaming_record(person_id: str):
 
         tier_points = random.randint(400, 1200)
 
-    hold_pct = random.uniform(0.05, 0.15)
+    hold_pct = random.choice([0.06, 0.12])
 
     theo_win = round(
         bet * hold_pct,
@@ -255,18 +286,66 @@ def generate_gaming_record(person_id: str):
 
     win_chance = random.random()
 
+    if win_chance < 0.7:
+        # casino Wins
+        casino_win = round(
+            random.uniform(
+                1,
+                bet * 0.80
+            ),
+            2
+        )
+    else:
+        # player wins
+        casino_win = round(
+            -random.uniform(
+                1,
+                bet * 2
+            ),
+            2
+        )
     
     paid_out = round(
-    bet * random.uniform(0.92, 1.05),
-    2)
-    
+        bet - casino_win,
+        2
+    )
+     # Net Casino Win
+    # Must be less than casino win
+    # --------------------------------
+    adjustment = random.randint(1, 10)
 
-    casino_win = round(
-    random.uniform(-44, 48300),
-    2
+    game_net_casino_win = round(
+        casino_win - adjustment,
+        2
     )
 
-    transaction_amount = casino_win
+    # Ensure net casino win does not exceed bet
+    game_net_casino_win = min(
+        game_net_casino_win,
+        bet
+    )
+
+    # --------------------------------
+    # Theo Win
+    # 6% or 12%
+    # --------------------------------
+    theo_win = round(
+        bet * hold_pct,
+        2
+    )
+    # --------------------------------
+    # Net Theo Win
+    # Theo Win - random(20,30)
+    # --------------------------------
+
+    deduction = random.uniform(20, 30)
+
+    game_net_theo_win = round(
+        theo_win - deduction,
+        2
+    )
+
+    transaction_amount = bet
 
         # Random timestamp within last 1 year
     days_back = random.randint(0, 365)
@@ -325,15 +404,7 @@ def generate_gaming_record(person_id: str):
         2
     )
 
-    game_net_theo_win = round(
-    theo_win * random.uniform(0.97, 1.00),
-    2
-    )
-
-    game_net_casino_win = round(
-        casino_win - random.uniform(0, 50),
-        2
-    )
+    
 
     game_cmp_game_name = game_title
 
@@ -342,11 +413,14 @@ def generate_gaming_record(person_id: str):
         9999
     )
 
-    game_jackpot_amount = 0
+    game_jackpot_amount = round(
+        random.uniform(0, 50000),
+        2
+    )
 
     player_value = round(
-    theo_win * random.uniform(0.85, 1.15),
-    4
+        random.uniform(1.0, 30.0),
+        4
     )
 
     #####
@@ -503,9 +577,9 @@ def generate_gaming_record(person_id: str):
         game_machine_sas_serial_number = None
         game_machine_pls_game_theme = None
     
-    game_duration_min = random.randint(
-        1,
-        480
+    game_duration_sec = random.randint(
+        7200,
+        14400
     )
 
 
@@ -605,7 +679,7 @@ def generate_gaming_record(person_id: str):
 
         "ENTITY_ACTION": entity_action,
 
-        "DURATION":game_duration_min,
+        "DURATION":game_duration_sec,
 
         "EVENT_ID": fake.bothify(text='EV-########'),
 
