@@ -11,7 +11,8 @@ app = FastAPI(title="Casino Gaming Data API")
 fake = Faker()
 
 
-def generate_gaming_record(person_id: str):
+def generate_gaming_record(person_id: str,
+    timestamp: datetime = None):
     """
     Generates persistent player profile data
     with dynamic gaming transaction data.
@@ -348,29 +349,37 @@ def generate_gaming_record(person_id: str):
     transaction_amount = bet
 
         # Random timestamp within last 1 year
-    days_back = random.randint(0, 365)
-
-    seconds_back = random.randint(
-        0,
-        86400
-    )
+    
 
     casino_name = properties[
         current_host_sf_property_id
     ]
 
-    timestamp = datetime.now() - timedelta(
-        days=days_back,
-        seconds=seconds_back
-    )
+    if timestamp is None:
 
-    current_host_start_date = (
-    timestamp - timedelta(days=10)
-    ).date()
+        days_back = random.randint(0, 365)
 
-    current_host_stop_date = (
-        timestamp + timedelta(days=90)
-    ).date()
+        seconds_back = random.randint(
+            0,
+            86400
+        )
+
+        timestamp = datetime.now() - timedelta(
+            days=days_back,
+            seconds=seconds_back
+        )
+
+    if current_host == "N/A":
+        current_host_start_date = None
+        current_host_stop_date = None
+    else:
+        current_host_start_date = (
+            timestamp - timedelta(days=10)
+        ).date()
+
+        current_host_stop_date = (
+            timestamp + timedelta(days=90)
+        ).date()
 
     ############################
     game_tran_id = fake.uuid4()
@@ -632,10 +641,14 @@ def generate_gaming_record(person_id: str):
         "CURRENT_HOST_EMAIL": current_host_email,
 
         "CURRENT_HOST_START_DATE":
-            current_host_start_date.isoformat(),
+            current_host_start_date.isoformat()
+            if current_host_start_date is not None
+            else None,
 
         "CURRENT_HOST_STOP_DATE":
-            current_host_stop_date.isoformat(),
+            current_host_stop_date.isoformat()
+            if current_host_stop_date is not None
+            else None,
 
         "CURRENT_HOST_SF_PROPERTY_ID":
             current_host_sf_property_id,
@@ -842,7 +855,7 @@ def generate_gaming_record(person_id: str):
 @app.get("/v1/player-activity")
 async def get_player_activity(
     players: int = 500,
-    records_per_player: int = 3
+    records_per_player: int = 5
 ):
     """
     Returns players with multiple gaming records.
@@ -879,13 +892,31 @@ async def get_player_activity(
             used_names.add(full_name)
 
             # Generate multiple records
-            for _ in range(records_per_player):
+            base_date = datetime.now() - timedelta(
+                days=random.randint(0, 365)
+            )
 
-                records.append(
-                    generate_gaming_record(
-                        person_id=player_id
-                    )
+            gaming_dates = [base_date]
+
+            for _ in range(records_per_player - 1):
+
+                next_date = gaming_dates[-1] + timedelta(
+                    days=random.randint(1, 60)
                 )
+
+                if next_date > datetime.now():
+                    next_date = datetime.now()
+
+                gaming_dates.append(next_date)
+
+        for gaming_date in gaming_dates:
+
+            records.append(
+                generate_gaming_record(
+                    person_id=player_id,
+                    timestamp=gaming_date
+                )
+            )
 
         i += 1
 
