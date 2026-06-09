@@ -898,16 +898,32 @@ async def get_player_activity(
 
             gaming_dates = [base_date]
 
+            used_dates = {
+                base_date.strftime("%Y-%m-%d")
+            }
+
             for _ in range(records_per_player - 1):
 
-                next_date = gaming_dates[-1] + timedelta(
-                    days=random.randint(1, 60)
-                )
+                while True:
 
-                if next_date > datetime.now():
-                    next_date = datetime.now()
+                    next_date = gaming_dates[-1] + timedelta(
+                        days=random.randint(1, 60)
+                    )
 
-                gaming_dates.append(next_date)
+                    if next_date > datetime.now():
+                        next_date = datetime.now() - timedelta(
+                            days=random.randint(0, 30)
+                        )
+
+                    gaming_date_str = next_date.strftime("%Y-%m-%d")
+
+                    if gaming_date_str not in used_dates:
+
+                        used_dates.add(gaming_date_str)
+
+                        gaming_dates.append(next_date)
+
+                        break
 
         for gaming_date in gaming_dates:
 
